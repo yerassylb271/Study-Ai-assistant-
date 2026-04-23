@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Study Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="logo-box">
+    <img src="/static/logo.png" class="logo">
+    <h3>AI Study</h3>
+</div>
+
+
+        <h3>📚 AI Study</h3>
+
+        <!-- 🧠 MODE BUTTONS -->
+        <div class="mode-box">
+
+            <button class="mode-btn active" onclick="setMode('explain', this)">
+                🧠 Explain
+            </button>
+
+            <button class="mode-btn" onclick="setMode('quiz', this)">
+                ❓ Quiz
+            </button>
+
+            <button class="mode-btn" onclick="setMode('summary', this)">
+                📝 Summary
+            </button>
+
+            <button class="mode-btn" onclick="setMode('plan', this)">
+                📅 Study Plan
+            </button>
+
+        </div>
+
+        <!-- hidden mode -->
+        <input type="hidden" id="mode" value="explain">
+
+        <hr>
+
+        <a href="/history">📜 History</a>
+        <a href="/logout">🚪 Logout</a>
+
+    </div>
+
+    <!-- MAIN CHAT -->
+    <div class="main">
+
+        <div id="chatbox" class="chatbox"></div>
+
+        <div class="input-area">
+            <input id="topic" placeholder="Ask anything...">
+            <button onclick="generate()">Send</button>
+        </div>
+        <div class="hero">
+
+    <h1>📚 AI Study Assistant</h1>
+
+    <p>
+        This platform helps students learn faster using AI.
+        You can generate explanations, quizzes, summaries, and study plans for any topic.
+    </p>
+
+</div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* 🧠 MODE SWITCH */
+function setMode(mode, element) {
+    document.getElementById("mode").value = mode;
+
+    const buttons = document.querySelectorAll(".mode-btn");
+    buttons.forEach(btn => btn.classList.remove("active"));
+
+    element.classList.add("active");
+}
+
+/* 💬 CHAT */
+function addMessage(role, text) {
+    const chat = document.getElementById("chatbox");
+
+    const div = document.createElement("div");
+    div.className = role === "user" ? "msg user" : "msg ai";
+    div.innerText = text;
+
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+/* 🧠 THINKING */
+function showThinking() {
+    const chat = document.getElementById("chatbox");
+
+    const div = document.createElement("div");
+    div.className = "msg ai";
+    div.id = "thinking";
+    div.innerText = "AI is thinking... 🤔";
+
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function removeThinking() {
+    const el = document.getElementById("thinking");
+    if (el) el.remove();
+}
+
+/* 🚀 GENERATE */
+async function generate() {
+    const topic = document.getElementById("topic").value;
+    const mode = document.getElementById("mode").value;
+
+    if (!topic) return;
+
+    addMessage("user", topic);
+    showThinking();
+
+    const res = await fetch("/generate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({topic, mode})
+    });
+
+    const data = await res.json();
+
+    removeThinking();
+    addMessage("ai", data.response);
+
+    document.getElementById("topic").value = "";
+}
+
+</script>
+
+</body>
+</html>
