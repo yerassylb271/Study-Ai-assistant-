@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
-import ollama
+import google.generativeai as genai
 
 app = Flask(__name__)
 app.secret_key = "free_ai_project_key"
+
+# 🔑 PUT YOUR GEMINI API KEY HERE
+genai.configure(api_key="AIzaSyAAWlaB0WaQql3uNUukgLyWZNrfqqWywqk")
+model = genai.GenerativeModel("gemini-1.5-flash")
+
 
 # ---------------- DATABASE ----------------
 def init_db():
@@ -32,6 +37,7 @@ def init_db():
     conn.close()
 
 init_db()
+
 
 # ---------------- AUTH ----------------
 @app.route("/register", methods=["GET", "POST"])
@@ -91,28 +97,23 @@ def generate():
         return jsonify({"response": "Not logged in"})
 
     data = request.json
-    topic = data["topic"]
-    mode = data["mode"]
+    topic = data.get("topic")
+    mode = data.get("mode")
 
     prompts = {
         "explain": f"Explain {topic} simply with examples.",
         "quiz": f"Create 5 quiz questions with answers about {topic}.",
         "summary": f"Summarize {topic} in simple bullet points.",
         "plan": f"Create a 7-day study plan for {topic}.",
-        "chat": topic
     }
 
     prompt = prompts.get(mode, topic)
 
     try:
-        res = ollama.chat(
-            model="llama3",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        answer = res["message"]["content"]
-
-    except Exception:
-        answer = "AI not available. Run: ollama run llama3"
+        response = model.generate_content(prompt)
+        answer = response.text
+    except Exception as e:
+        answer = f"AI error: {str(e)}"
 
     # save to DB
     conn = sqlite3.connect("database.db")
