@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
 import os
-import google.generativeai as genai
 
 app = Flask(__name__)
 app.secret_key = "free_ai_project_key"
