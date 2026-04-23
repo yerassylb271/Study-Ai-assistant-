@@ -1,16 +1,38 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
+import os
 import google.generativeai as genai
 
 app = Flask(__name__)
 app.secret_key = "free_ai_project_key"
 
-# 🔑 PUT YOUR GEMINI API KEY HERE
-genai.configure(api_key="AIzaSyAAWlaB0WaQql3uNUukgLyWZNrfqqWywqk")
-model = genai.GenerativeModel("gemini-1.5-flash")
+# =======================
+from groq import Groq  # Add this import at the very top of the file
 
+# =======================
+# 🤖 GROQ AI SETUP (Instead of Gemini)
+# =======================
+# Your gsk_... key works here
+client = Groq(api_key="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")
 
-# ---------------- DATABASE ----------------
+def ask_ai(prompt):
+    try:
+        # Use the Llama 3 model, it is free and very fast in Groq
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            ],
+            model="llama-3.3-70b-versatile",
+        )
+        return chat_completion.choices[0].message.content
+    except Exception as e:
+        return f"AI error: {str(e)}"
+
+# 📦 DATABASE
+# =======================
 def init_db():
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
@@ -36,10 +58,13 @@ def init_db():
     conn.commit()
     conn.close()
 
+
 init_db()
 
 
-# ---------------- AUTH ----------------
+# =======================
+# 🔐 AUTH
+# =======================
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -82,7 +107,9 @@ def logout():
     return redirect("/login")
 
 
-# ---------------- HOME ----------------
+# =======================
+# 🏠 HOME
+# =======================
 @app.route("/")
 def home():
     if "user_id" not in session:
@@ -90,7 +117,9 @@ def home():
     return render_template("index.html")
 
 
-# ---------------- AI ENGINE ----------------
+# =======================
+# 🧠 AI GENERATE
+# =======================
 @app.route("/generate", methods=["POST"])
 def generate():
     if "user_id" not in session:
@@ -101,7 +130,7 @@ def generate():
     mode = data.get("mode")
 
     prompts = {
-        "explain": f"Explain {topic} simply with examples.",
+        "explain": f"Explain {topic} in a simple way with examples.",
         "quiz": f"Create 5 quiz questions with answers about {topic}.",
         "summary": f"Summarize {topic} in simple bullet points.",
         "plan": f"Create a 7-day study plan for {topic}.",
@@ -109,13 +138,9 @@ def generate():
 
     prompt = prompts.get(mode, topic)
 
-    try:
-        response = model.generate_content(prompt)
-        answer = response.text
-    except Exception as e:
-        answer = f"AI error: {str(e)}"
+    answer = ask_ai(prompt)
 
-    # save to DB
+    # save history
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute(
@@ -128,7 +153,9 @@ def generate():
     return jsonify({"response": answer})
 
 
-# ---------------- HISTORY ----------------
+# =======================
+# 📜 HISTORY
+# =======================
 @app.route("/history")
 def history():
     if "user_id" not in session:
@@ -150,5 +177,8 @@ def history():
     return render_template("history.html", data=data)
 
 
+# =======================
+# 🚀 RUN APP
+# =======================
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
