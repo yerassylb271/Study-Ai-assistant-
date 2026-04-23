@@ -1,3 +1,4 @@
-flask
-Groq
+Flask
+groq
 gunicorn
+python-dotenv
