@@ -1,0 +1,283 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0f19;
+    color: white;
+}
+
+/* APP LAYOUT */
+.app {
+    display: flex;
+    height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #111827;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar a {
+    color: #93c5fd;
+    text-decoration: none;
+    margin: 10px 0;
+}
+
+.sidebar select {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* MAIN CHAT */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* CHAT AREA */
+.chatbox {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* MESSAGES */
+.msg {
+    padding: 12px 16px;
+    margin: 10px 0;
+    max-width: 70%;
+    border-radius: 12px;
+    white-space: pre-wrap;
+}
+
+.user {
+    background: #2563eb;
+    margin-left: auto;
+    text-align: right;
+}
+
+.ai {
+    background: #1f2937;
+}
+
+/* INPUT AREA */
+.input-area {
+    display: flex;
+    padding: 15px;
+    background: #111827;
+}
+
+.input-area input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+.input-area button {
+    margin-left: 10px;
+    padding: 12px 18px;
+    background: #3b82f6;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.input-area button:hover {
+    background: #2563eb;
+}
+/* HISTORY PAGE LAYOUT */
+.history-app {
+    display: flex;
+    height: 100vh;
+}
+
+/* MAIN AREA */
+.history-main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #0b0f19;
+}
+
+/* TITLE */
+.history-main h2 {
+    margin-bottom: 20px;
+}
+
+/* LIST */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* CARD */
+.history-card {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    transition: 0.2s;
+}
+
+.history-card:hover {
+    transform: scale(1.01);
+}
+
+/* HEADER */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.topic {
+    font-weight: bold;
+}
+
+.mode {
+    background: #3b82f6;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* BODY */
+.history-body {
+    white-space: pre-wrap;
+    color: #cbd5e1;
+}
+
+/* AUTH PAGES (LOGIN / REGISTER) */
+
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0b0f19;
+}
+
+.auth-box {
+    background: #111827;
+    padding: 80px;
+    border-radius: 24px;
+    width: 640px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.auth-box h2 {
+    margin-bottom: 20px;
+}
+
+/* inputs */
+.auth-box input {
+    width: 100%;
+    padding: 22px;
+    margin: 16px 0;
+    border: none;
+    border-radius: 16px;
+    outline: none;
+}
+
+/* button */
+.auth-box button {
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+    background: #3b82f6;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.auth-box button:hover {
+    background: #2563eb;
+}
+
+/* links */
+.auth-box a {
+    color: #60a5fa;
+    text-decoration: none;
+}
+.lang-switch {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.lang-switch select {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background: #1e293b;
+    color: white;
+}
+.mode-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.mode-btn {
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: left;
+    font-size: 14px;
+}
+
+.mode-btn:hover {
+    background: #374151;
+    transform: scale(1.03);
+}
+
+.mode-btn.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+.hero {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #2d3748;
+    margin-bottom: 10px;
+}
+
+.hero h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #60a5fa;
+}
+
+.hero p {
+    font-size: 14px;
+    color: #cbd5e1;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+.logo-box {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 110px;
+    height: 110px;
+    border-radius: 18px;
+}
