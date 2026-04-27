@@ -12,7 +12,7 @@ from groq import Groq  # Add this import at the very top of the file
 # 🤖 GROQ AI SETUP (Instead of Gemini)
 # =======================
 # Your gsk_... key works here
-client = Groq(api_key="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")
+client = Groq(api_key="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")
 
 def ask_ai(prompt):
     try:
