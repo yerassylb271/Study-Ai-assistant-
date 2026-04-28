@@ -100,6 +100,11 @@ def generate():
             return jsonify({"response": "AI failed to format quiz. Try again."})
 
     return jsonify({"response": answer})
+    
+@app.route("/logout")
+def logout():
+    session.clear()  # Полностью очищаем сессию пользователя
+    return redirect("/login") # Перенаправляем на страницу входа
 
 
 if __name__ == "__main__":
