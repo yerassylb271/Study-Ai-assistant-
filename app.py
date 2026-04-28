@@ -66,7 +66,22 @@ def login():
             session["user_id"] = user[0]
             return redirect("/")
     return render_template("login.html")
+    
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        u = request.form["username"]
+        p = request.form["password"]
 
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (u, p))
+        conn.commit()
+        conn.close()
+
+        return redirect("/login")
+
+    return render_template("register.html")
 
 @app.route("/generate", methods=["POST"])
 def generate():
