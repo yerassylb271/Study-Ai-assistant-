@@ -275,6 +275,48 @@ body {
     text-align: center;
     margin-bottom: 20px;
 }
+/* Квиз в стиле Kahoot */
+.quiz-card {
+    background: #1f2937;
+    border: 1px solid #374151;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.quiz-opt {
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.opt-0 { background: #e21b3c; }
+.opt-1 { background: #1368ce; }
+.opt-2 { background: #d89e00; }
+.opt-3 { background: #26890c; }
+
+.quiz-opt:hover:not(:disabled) { transform: scale(1.02); filter: brightness(1.1); }
+.quiz-opt:disabled { cursor: not-allowed; }
+
+.feedback {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 
 .logo {
     width: 110px;
