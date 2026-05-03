@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = "free_ai_project_key"
 
 # 🤖 GROQ SETUP
-client = Groq(api_key="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")
+client = Groq(api_key="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")
 
 
 def ask_ai(prompt, is_quiz=False):
